@@ -1,10 +1,6 @@
 #!/bin/bash
-DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-HOME_DIR=$HOME
-ITEM_LIST=(
-  "tmux"
-  "wezterm"
-)
+SETUP_FILE="setup.sh"
+CONFIG_LIST=()
 remove=false
 exclude=false
 status="install"
@@ -17,58 +13,54 @@ while getopts "er" opt; do
       ;;
     r)
       remove=true
+      status="unlink"
       ;;
   esac
 done
 shift $((OPTIND-1))
 
-tmux() {
-  if $remove; then
-    unlink "$HOME/.tmux.conf"
-  else
-    ln -sf "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/"
-  fi
-}
-
-wezterm() {
-  if $remove; then
-    unlink "$HOME/.wezterm.lua"
-  else
-    ln -sf "$DOTFILES_DIR/wezterm/.wezterm.lua" "$HOME/"
-  fi
-}
-
 echo "Setting up dotfiles..."
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+for path in *; do
+  if [ -d "$path" ]; then
+    CONFIG_LIST+=("$path")
+  fi
+done
+
 if [ $# -gt 0 ]; then
   if $exclude; then
-    status="unlink"
-    for item in "${ITEM_LIST[@]}"; do
+    for config in "${CONFIG_LIST[@]}"; do
       skip=false
       for ex in "$@"; do
-        if [[ $item == $ex ]]; then
+        if [[ $config == $ex ]]; then
           skip=true
           break;
         fi
       done
       if ! $skip; then
-        targets+=("$item")
+        targets+=("$config")
       fi
     done
   else
     targets=("$@")
   fi
 else
-  targets=("${ITEM_LIST[@]}")
+  targets=("${CONFIG_LIST[@]}")
 fi
 
 echo "${status}ing ${targets[@]}"
 
-for fn in "${targets[@]}"; do
-  if declare -f "$fn" > /dev/null; then
-    "$fn"
-    echo "${status}ed $fn"
+for config in "${targets[@]}"; do
+  if [ -d "$config" ]; then
+    cd "$config"
+    source "${SETUP_FILE}"
+    cd ".."
+
+    echo "${status}ed ${config}"
   else
     echo "'$fn' not found"
   fi
 done
+
 echo "Done"
