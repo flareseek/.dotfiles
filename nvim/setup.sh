@@ -1,6 +1,3 @@
-if $remove; then
-  unlink "$HOME/.config/nvim"
-else
-  ln -sf "$(pwd)/nvim" "$HOME/.config/"
-fi
-
+#!/bin/bash
+config_var1=("nvim" "$HOME/.config")
+config_arr=(config_var1)

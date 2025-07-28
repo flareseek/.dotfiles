@@ -1,5 +1,3 @@
-if $remove; then
-  unlink "$HOME/.wezterm.lua"
-else
-  ln -sf "$(pwd)/.wezterm.lua" "$HOME/"
-fi
+#!/bin/bash
+config_var1=(".wezterm.lua" "$HOME")
+config_arr=(config_var1)
