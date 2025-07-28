@@ -53,6 +53,8 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 vim.opt.scrolloff = 7
+
+vim.opt.winborder = 'rounded'
 -- 파일 타입 플러그인 및 들여쓰기 설정
 -- vim.cmd("filetype plugin indent on")
 
