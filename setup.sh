@@ -67,12 +67,19 @@ for config in "${targets[@]}"; do
           link_path=${config_var_name}[1]; link_path=${!link_path}
           unlink_path="${link_path}/${!target}"
 
-          if $remove; then
-            unlink "${unlink_path}"
+          if [[ -e ${target_path} ]]; then
+            if [[ ! -d ${link_path} ]]; then
+              mkdir -pv "${link_path}";
+            fi
+            if $remove; then
+              unlink "${unlink_path}"
+            else
+              ln -sfv "${target_path}" "${link_path}"
+            fi
+            declare ${config_var_name}=""
           else
-            ln -sfv "${target_path}" "${link_path}"
+            echo "not found ${target_path}"
           fi
-          declare ${config_var_name}=""
         else
           echo "not found \`${config_var_name}\` variable"
         fi
