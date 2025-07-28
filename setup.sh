@@ -76,10 +76,10 @@ for config in "${targets[@]}"; do
             else
               ln -sfv "${target_path}" "${link_path}"
             fi
-            declare ${config_var_name}=""
           else
             echo "not found ${target_path}"
           fi
+          declare ${config_var_name}=""
         else
           echo "not found \`${config_var_name}\` variable"
         fi
