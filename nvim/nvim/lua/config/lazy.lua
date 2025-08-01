@@ -20,11 +20,20 @@ vim.opt.rtp:prepend(lazypath)
 -- This is also a good place to setup other settings (vim.opt)
 
 -- Setup lazy.nvim
-require("lazy").setup({
+local spec = {}
+if not vim.g.isIDE then
   spec = {
-    { import = "plugins" },
+    { import = "plugins.core" },
+    { import = "plugins.core.ide" },
+    { import = "plugins.extends" },
     { import = "colorscheme" },
-  },
+  }
+else
+  spec = {{ import = "plugins.core.ide" }}
+end
+
+require("lazy").setup({
+  spec = spec,
   install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
