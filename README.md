@@ -7,11 +7,10 @@ argument: setup configs <br>
 -e: exclude <br>
 -r: unlink <br>
 
-## config list
+# config list
 `tmux` `wezterm` `nvim`
 
-----
-### tmux
+# tmux
 
 <img width="3024" height="1888" alt="image" src="https://github.com/user-attachments/assets/c752ab44-373b-4423-973a-e9d36bf9f7e3" />
 
@@ -48,3 +47,21 @@ prefix: `ctrl-g`
 | **prefix + ]**                | paste                              |
 | **y**                         | copy                               |
 | **q**                         | escape                             |
+
+# neovim
+
+leaderkey = `\`
+## mini.splitjoin
+| Shortcut                      | Action                               |
+|-------------------------------|--------------------------------------|
+|      =s           | toggle |
+
+## mini.surround
+| Shortcut                      | Action                               |
+|-------------------------------|--------------------------------------|
+|      \<leader\>sa           | add |
+|      \<leader\>sd           | delete |
+|      \<leader\>sr           | replace |
+|      \<leader\>sf           | find |
+|      \<leader\>sF           | find_left |
+|      \<leader\>sh           | highlight |
